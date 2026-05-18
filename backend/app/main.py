@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from calculations import calculate_tension
+from backend.app.calculations import calculate_tension
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, Integer, String, Float
