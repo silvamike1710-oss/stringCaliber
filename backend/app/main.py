@@ -1,22 +1,19 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from app.calculations import calculate_tension
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String, Float
+from pydantic import BaseModel
 
+from app.calculations import calculate_tension
 
 app = FastAPI()
 
+# CORS MUST come immediately after app creation
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://string-caliber-xb7v.vercel.app/"],
+    allow_origins=["*"],  # temporary for debugging
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-Base = declarative_base()
 
 
 @app.get("/")
@@ -42,13 +39,3 @@ def calculate(data: TensionRequest):
     return {
         "tension": tension
     }
-
-
-class GuitarString(Base):
-    __tablename__ = "strings"
-
-    id = Column(Integer, primary_key=True, index=True)
-    brand = Column(String)
-    gauge = Column(String)
-    unit_weight = Column(Float)
-
