@@ -3,7 +3,7 @@ import axios from "axios"
 
 export default function App() {
 
-  const [unitWeight, setUnitWeight] = useState("")
+  const [gauge, setGauge] = useState("")
   const [scaleLength, setScaleLength] = useState("")
   const [frequency, setFrequency] = useState("")
   const [result, setResult] = useState<number | null>(null)
@@ -17,9 +17,20 @@ export default function App() {
     E4: 329.63,
   }
 
+  const stringGauges: Record<string, number> = {
+    ".009": 0.000099,
+    ".010": 0.000120,
+    ".011": 0.000145,
+    ".016": 0.000317,
+    ".024": 0.000550,
+    ".032": 0.000980,
+    ".042": 0.001580,
+    ".046": 0.001900,
+  }
+
   async function calculateTension() {
 
-    if (!unitWeight || !scaleLength || !frequency) {
+    if (!gauge || !scaleLength || !frequency) {
       return
     }
 
@@ -28,7 +39,7 @@ export default function App() {
       const response = await axios.post(
         "http://127.0.0.1:8000/calculate",
         {
-          unit_weight: Number(unitWeight),
+          unit_weight: stringGauges[gauge],
           scale_length: Number(scaleLength),
           frequency: Number(frequency)
         }
@@ -43,7 +54,7 @@ export default function App() {
 
   useEffect(() => {
     calculateTension()
-  }, [unitWeight, scaleLength, frequency])
+  }, [gauge, scaleLength, frequency])
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
@@ -54,13 +65,23 @@ export default function App() {
           String Tension Calculator
         </h1>
 
-        <input
+        <select
           className="w-full p-3 rounded-lg bg-gray-700 mb-4"
-          type="number"
-          placeholder="Unit Weight"
-          value={unitWeight}
-          onChange={(e) => setUnitWeight(e.target.value)}
-        />
+          value={gauge}
+          onChange={(e) => setGauge(e.target.value)}
+        >
+
+          <option value="">
+            Select Gauge
+          </option>
+
+          {Object.keys(stringGauges).map((g) => (
+            <option key={g} value={g}>
+              {g}
+            </option>
+          ))}
+
+        </select>
 
         <input
           className="w-full p-3 rounded-lg bg-gray-700 mb-4"
@@ -78,7 +99,7 @@ export default function App() {
         >
 
           <option value="">
-            Select a note
+            Select a Note
           </option>
 
           {Object.keys(notes).map((note) => (
@@ -104,13 +125,11 @@ export default function App() {
           Calculate
         </button>
 
-        {
-          result !== null && (
-            <div className="mt-6 text-2xl font-bold">
-              Tension: {result} lbs
-            </div>
-          )
-        }
+        {result !== null && (
+          <div className="mt-6 text-2xl font-bold">
+            Tension: {result} lbs
+          </div>
+        )}
 
       </div>
 
