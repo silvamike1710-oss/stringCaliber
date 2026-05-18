@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from backend.app.calculations import calculate_tension
+from app.calculations import calculate_tension
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, Integer, String, Float
@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://string-caliber-xb7v.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

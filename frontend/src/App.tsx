@@ -37,7 +37,7 @@ export default function App() {
     try {
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/calculate",
+        `${import.meta.env.VITE_API_URL}/calculate`,
         {
           unit_weight: stringGauges[gauge],
           scale_length: Number(scaleLength),
