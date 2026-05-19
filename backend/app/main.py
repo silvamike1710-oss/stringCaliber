@@ -37,5 +37,5 @@ def calculate(data: TensionRequest):
     )
 
     return {
-        "tension": tension
+        "tension": round(tension, 2)
     }

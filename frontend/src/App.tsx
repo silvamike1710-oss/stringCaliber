@@ -3,12 +3,24 @@ import axios from "axios"
 
 export default function App() {
 
+  const [stringCount, setStringCount] = useState("6")
   const [gauge, setGauge] = useState("")
   const [scaleLength, setScaleLength] = useState("")
   const [frequency, setFrequency] = useState("")
   const [result, setResult] = useState<number | null>(null)
 
-  const notes: Record<string, number> = {
+const tunings: Record<string, Record<string, number>> = {
+  "6": {
+    E2: 82.41,
+    A2: 110.00,
+    D3: 146.83,
+    G3: 196.00,
+    B3: 246.94,
+    E4: 329.63,
+  },
+
+  "7": {
+    B1: 61.74,
     E2: 82.41,
     A2: 110.00,
     D3: 146.83,
@@ -16,6 +28,9 @@ export default function App() {
     B3: 246.94,
     E4: 329.63,
   }
+}
+
+  const currentNotes = tunings[stringCount]
 
   const stringGauges: Record<string, number> = {
     ".009": 0.000099,
@@ -54,7 +69,11 @@ export default function App() {
 
   useEffect(() => {
     calculateTension()
-  }, [gauge, scaleLength, frequency])
+  }, [gauge, scaleLength, frequency, stringCount])
+
+  useEffect(() => {
+    setFrequency("")
+  }, [stringCount])
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
@@ -65,6 +84,14 @@ export default function App() {
           String Tension Calculator
         </h1>
 
+        <select
+          className="w-full p-3 rounded-lg bg-gray-700 mb-4"
+          value={stringCount}
+          onChange={(e) => setStringCount(e.target.value)}
+          >
+            <option value="6">6 Strings</option>
+            <option value="7">7 Strings</option>
+          </select>
         <select
           className="w-full p-3 rounded-lg bg-gray-700 mb-4"
           value={gauge}
@@ -94,7 +121,7 @@ export default function App() {
         <select
           className="w-full p-3 rounded-lg bg-gray-700 mb-4"
           onChange={(e) =>
-            setFrequency(notes[e.target.value].toString())
+            setFrequency(currentNotes[e.target.value].toString())
           }
         >
 
@@ -102,7 +129,7 @@ export default function App() {
             Select a Note
           </option>
 
-          {Object.keys(notes).map((note) => (
+          {Object.keys(currentNotes).map((note) => (
             <option key={note} value={note}>
               {note}
             </option>
@@ -127,7 +154,7 @@ export default function App() {
 
         {result !== null && (
           <div className="mt-6 text-2xl font-bold">
-            Tension: {result} lbs
+            Tension: {result.toFixed(2)} lbs
           </div>
         )}
 
