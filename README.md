@@ -62,8 +62,6 @@ T=
 UW×(2×L×F)
 2
 	​
-=======
-
 Vercel Deploy:
 https://string-caliber-xb7v.vercel.app/
 
