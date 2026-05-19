@@ -1,3 +1,7 @@
+
+Vercel Deploy:
+https://string-caliber-xb7v.vercel.app/
+
 Uma aplicação capaz de:
 - calcular tensão das cordas
 - converter notas musicais em frequencia
