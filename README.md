@@ -1,3 +1,4 @@
+
 https://string-caliber-xb7v.vercel.app/
 
 String Caliber
@@ -61,6 +62,18 @@ T=
 UW×(2×L×F)
 2
 	​
+=======
+
+Vercel Deploy:
+https://string-caliber-xb7v.vercel.app/
+
+Uma aplicação capaz de:
+- calcular tensão das cordas
+- converter notas musicais em frequencia
+- armazenar calibres em banco de dados
+- gerar presets de afinação
+- expor tudo via API REST
+
 
 
 Where:
@@ -103,17 +116,7 @@ npm run dev
 Environment Variables
 Frontend .env
 VITE_API_URL=https://your-render-api.onrender.com
-Deployment
-Frontend
 
-Deploy on:
-
-Vercel
-Backend
-
-Deploy on:
-
-Render
 Future Improvements
 Bass guitar support
 Custom tunings
@@ -122,9 +125,10 @@ String set presets
 Saved user presets
 Graph visualization
 String brand database
-Author
 
+Author:
 Michael Silva
 
 GitHub:
 [GitHub Profile](https://github.com/silvamike1710-oss)
+=
